@@ -32,17 +32,26 @@ services:
       links: 
         - mysql:db
 
-    #Settaroume kai to image tou jupyter. Auto to image den iparxei sto dockerhub
-    # opote theloume na treksoume to local image pou exoume ftiaksei
-    # ara den theloume image theloume build
+
+
     breast-cancer-lab: 
-        build: 
-            # tou leme se poion fakelo einai to docker file
-            context: ./
-            # kai poio einai to dockerfile
-            dockerfile: dockerfile
-        depends_on: 
-            - mysql
-        ports: 
-        - "8888:8888"
+      image: thanasiskottdocker/breast-jupyter:1
+      depends_on: 
+        - mysql
+      ports: 
+      - "8888:8888"
+
+    # #Settaroume kai to image tou jupyter. Auto to image den iparxei sto dockerhub
+    # # opote theloume na treksoume to local image pou exoume ftiaksei
+    # # ara den theloume image theloume build
+    # breast-cancer-lab: 
+    #     build: 
+    #         # tou leme se poion fakelo einai to docker file
+    #         context: ./
+    #         # kai poio einai to dockerfile
+    #         dockerfile: dockerfile
+    #     depends_on: 
+    #         - mysql
+    #     ports: 
+    #     - "8888:8888"
        
