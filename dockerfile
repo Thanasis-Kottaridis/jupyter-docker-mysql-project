@@ -31,3 +31,5 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/
 RUN chmod +x /usr/bin/tini
 
 CMD ["jupyter", "notebook", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
+
+# , "python3 /lib/mySqlManager.py"
