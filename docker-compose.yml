@@ -1,0 +1,48 @@
+# to proto pou grafoume sto YAML einai i version tou docker compose
+version: '3'
+
+# stin sinexia vazoume ta services pou tha sikosoume
+services: 
+    # to proto service tha einai enas mysql server.
+    mysql:
+      # tou orizoume ti image kai ti version theloume na exei (an orisoume version auto tha kateuazei panta statheri version)
+      # tin version auti tin kateuazei apo to docker hub
+      image: mysql:5.7.20
+      # anti gia -e gia tis metavlites perivalontos edo xrisimopoioume tin metavliti enviroment
+      # kai pername user kai pass tis list (i '-' simenei  oti milame gia lista)
+      environment:
+        - "MYSQL_USER=root"
+        - "MYSQL_ROOT_PASSWORD=root"
+      # stin sinexeia antistixoume ta ports ta opoia einai pali list gt ena container mporei na akouei se perisoteres apo mia portes
+      ports: 
+        - 3306:3306
+      # tou leme ama theloume kai se poio volume na apothikeuei ta data tis mySQL
+      # TODO CHECK IF NEEDED
+  
+    # vazoume kai ena PHP My Admin gia na exoume na diaxirizomaste tin vasi mas
+    phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      # dilonoume apo poia images exei eksartisi
+      # diladi san na tou leme an den treksei auto min trekseis esu.
+      depends_on:
+        - mysql
+      ports: 
+        - "8090:80"
+      # to php my admin pernei san orisma --link to image tis mySQL pou tha kanei link stin metavliti db tou ara grafoume
+      links: 
+        - mysql:db
+
+    #Settaroume kai to image tou jupyter. Auto to image den iparxei sto dockerhub
+    # opote theloume na treksoume to local image pou exoume ftiaksei
+    # ara den theloume image theloume build
+    breast-cancer-lab: 
+        build: 
+            # tou leme se poion fakelo einai to docker file
+            context: ./
+            # kai poio einai to dockerfile
+            dockerfile: dockerfile
+        depends_on: 
+            - mysql
+        ports: 
+        - "8888:8888"
+       
